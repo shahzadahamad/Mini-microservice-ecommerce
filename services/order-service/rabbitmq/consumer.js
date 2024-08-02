@@ -22,7 +22,7 @@ const consumeProductMessages = async () => {
     const connection = await amqplib.connect(config.amqplibServeUrl);
     const channel = await connection.createChannel();
 
-    await channel.assertQueue("ORDER", { durable: true });
+    await channel.assertQueue("ORDER");
 
     channel.consume("ORDER", async (message) => {
       if (message !== null) {

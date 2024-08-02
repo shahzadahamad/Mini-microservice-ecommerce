@@ -6,7 +6,7 @@ const sendMessage = async (queue, message, next) => {
     const connection = await amqplib.connect(config.amqplibServeUrl);
     const channel = await connection.createChannel();
 
-    await channel.assertQueue(queue, { durable: true });
+    await channel.assertQueue(queue);
 
     const messageBuffer = Buffer.from(JSON.stringify(message));
     channel.sendToQueue(queue, messageBuffer);
