@@ -1,23 +1,19 @@
-const amqplib = require("amqplib");
-const config = require("../config/config");
+const connectToRabbitMQ = require("./connection");
 
 const consumeOrderMessages = async () => {
   try {
-    const connection = await amqplib.connect(config.amqplibServeUrl);
-    const channel = await connection.createChannel();
+    const channel = await connectToRabbitMQ();
 
-    await channel.assertQueue("PRODUCT");
-
-    let order;
-
-    channel.consume("PRODUCT", (message) => {
-      if (message !== null) {
-        order = JSON.parse(message.content.toString());
-        channel.ack(message);
-      }
+    return new Promise((resolve, reject) => {
+      channel.consume("PRODUCT", (message) => {
+        if (message !== null) {
+          order = JSON.parse(message.content.toString());
+          channel.ack(message);
+          resolve(order);
+        }
+      });
     });
 
-    return order;
   } catch (error) {
     console.error("Error consuming product messages from RabbitMQ:", error);
   }

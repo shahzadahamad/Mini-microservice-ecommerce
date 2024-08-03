@@ -3,7 +3,7 @@ const app = express();
 const PORT = process.env.PORT_ONE || 8080;
 const config = require("./config/config");
 const productRoute = require("./routes/product");
-const amqplib = require("amqplib");
+const connectToRabbitMQ = require("./rabbitmq/connection");
 
 app.use(express.json());
 
@@ -19,19 +19,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-const connectToRabbitMQ = async () => {
-  try {
-    const connection = await amqplib.connect(config.amqplibServeUrl);
-    const channel = await connection.createChannel();
-    await channel.assertQueue("PRODUCT");
-    console.log("Connected to RabbitMQ");
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
 connectToRabbitMQ()
   .then(() => {
+    console.log("Connected to RabbitMQ");
     app.listen(PORT, () => {
       console.log(`Product-Service at ${PORT}`);
       config.connectDB();

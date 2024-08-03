@@ -1,22 +1,17 @@
-const amqplib = require("amqplib");
-const config = require("../config/config");
+const connectToRabbitMQ = require("./connection");
 
-const sendMessage = async (queue, message, next) => {
+const sendMessage = async (queue, message) => {
   try {
-    const connection = await amqplib.connect(config.amqplibServeUrl);
-    const channel = await connection.createChannel();
-
+    
+    const channel = await connectToRabbitMQ();
+    
     await channel.assertQueue(queue);
 
     const messageBuffer = Buffer.from(JSON.stringify(message));
     channel.sendToQueue(queue, messageBuffer);
 
-    setTimeout(() => {
-      connection.close();
-    }, 500);
   } catch (error) {
     console.error("Error sending message to RabbitMQ:", error);
-    next(error);
   }
 };
 

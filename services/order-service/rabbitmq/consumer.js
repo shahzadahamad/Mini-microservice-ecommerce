@@ -1,7 +1,6 @@
-const amqplib = require("amqplib");
-const config = require("../config/config");
 const Order = require("../models/order");
 const { sendMessage } = require("./producer");
+const connectToRabbitMQ = require("./connection");
 
 const createOrder = async (products, userId) => {
   let total = 0;
@@ -19,20 +18,21 @@ const createOrder = async (products, userId) => {
 
 const consumeProductMessages = async () => {
   try {
-    const connection = await amqplib.connect(config.amqplibServeUrl);
-    const channel = await connection.createChannel();
-
-    await channel.assertQueue("ORDER");
+    const channel = await connectToRabbitMQ();
 
     channel.consume("ORDER", async (message) => {
       if (message !== null) {
-        const { products, userId } = JSON.parse(message.content.toString());
+        try {
+          const { products, userId } = JSON.parse(message.content.toString());
 
-        const newOrder = await createOrder(products, userId);
+          const newOrder = await createOrder(products, userId);
 
-        channel.ack(message);
+          channel.ack(message);
 
-        sendMessage("PRODUCT", newOrder);
+          sendMessage("PRODUCT", newOrder);
+        } catch (error) {
+          console.log(error.message);
+        }
       }
     });
   } catch (error) {

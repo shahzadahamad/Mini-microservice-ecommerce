@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
+require('dotenv').config();
+
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost/order-service");
+    await mongoose.connect(process.env.mongoUrl);
     console.log(`Order-Service DB Connected`);
   } catch (err) {
     console.error("Database connection error:", err.message);
@@ -10,9 +12,6 @@ const connectDB = async () => {
   }
 };
 
-const amqplibServeUrl = "amqp://localhost:5672";
-
 module.exports = {
   connectDB,
-  amqplibServeUrl,
 };

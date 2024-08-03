@@ -5,9 +5,12 @@ const app = express();
 const PORT = 3000;
 
 const services = { 
-  auth: 'http://localhost:7070',  
-  product: 'http://localhost:8080', 
-  order: 'http://localhost:9090',
+  // auth: 'http://auth-service:7070',  
+  // product: 'http://product-service:8080', 
+  // order: 'http://order-service:9090',
+  auth: 'http://localhost:7070',
+  product: 'http://localhost:8080',
+  order: 'http://localhost:9090'
 };
 
 

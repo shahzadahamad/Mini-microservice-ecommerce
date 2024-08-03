@@ -3,6 +3,7 @@ const { sendMessage } = require("../rabbitmq/producer");
 const { consumeOrderMessages } = require("../rabbitmq/consumer");
 const errorHandler = require("../utils/error");
 
+// get all products
 const getAllProduct = async (req, res, next) => {
   try {
     const products = await Product.find({});
@@ -37,7 +38,7 @@ const purchaseProduct = async (req, res, next) => {
 
     const products = await Product.find({ _id: { $in: ids } });
 
-    sendMessage("ORDER", { products, userId: req.user.id });
+    await sendMessage("ORDER", { products, userId: req.user.id });
 
     const order = await consumeOrderMessages();
 
@@ -52,6 +53,10 @@ const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { name, description, price } = req.body;
+
+    const productExist = await Product.findOne({ name, _id: { $ne: id } });
+
+    if (productExist) return next(errorHandler(401, "Product already exists"));
 
     const updatedProduct = await Product.findOneAndUpdate(
       { _id: id },
