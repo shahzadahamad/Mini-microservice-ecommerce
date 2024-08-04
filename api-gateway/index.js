@@ -15,7 +15,6 @@ const services = {
 
 app.get("/", (req, res) => {
   res.send("API Gateway is working");
-  console.log("API Gateway is working");
 });
 
 app.use('/auth', createProxyMiddleware({ target: services.auth, changeOrigin: true }));
@@ -24,5 +23,5 @@ app.use('/product', createProxyMiddleware({ target: services.product, changeOrig
 
 
 app.listen(PORT,() => {
-  console.log(`API Gateway is running on http://localhost:${PORT}`);
+  console.log(`API Gateway is running http://localhost:${PORT}`);
 })
