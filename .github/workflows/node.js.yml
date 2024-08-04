@@ -29,59 +29,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         
-       # Install and build each service
-    - name: Install dependencies and build - Product Service
-      run: |
-        cd services/product-service
-        npm ci
-        npm run build --if-present
-        cd ../..
-
-    - name: Install dependencies and build - Auth Service
-      run: |
-        cd services/auth-service
-        npm ci
-        npm run build --if-present
-        cd ../..
-
-    - name: Install dependencies and build - API Gateway
-      run: |
-        cd api-gateway
-        npm ci
-        npm run build --if-present
-        cd ..
-
-    - name: Install dependencies and build - Order Service
-      run: |
-        cd services/order-service
-        npm ci
-        npm run build --if-present
-        cd ../..
-
-    # Run tests for each service
-    - name: Run tests - Product Service
-      run: |
-        cd services/product-service
-        npm test --if-present
-        cd ../..
-
-    - name: Run tests - Auth Service
-      run: |
-        cd services/auth-service
-        npm test --if-present
-        cd ../..
-
-    - name: Run tests - API Gateway
-      run: |
-        cd api-gateway
-        npm test --if-present
-        cd ..
-
-    - name: Run tests - Order Service
-      run: |
-        cd services/order-service
-        npm test --if-present
-        cd ../..
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test --if-present
 
     - name: Build and Push Docker Image - Product Service
       uses: mr-smithers-excellent/docker-build-push@v6
