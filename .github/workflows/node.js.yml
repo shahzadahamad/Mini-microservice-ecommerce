@@ -41,6 +41,8 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./api-gateway/Dockerfile
+        tags: |
+          latest
 
     - name: Build and Push Docker Image - Auth Service
       uses: mr-smithers-excellent/docker-build-push@v6
@@ -50,6 +52,8 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./services/auth-service/Dockerfile
+        tags: |
+          latest
 
     - name: Build and Push Docker Image - Order Service
       uses: mr-smithers-excellent/docker-build-push@v6
@@ -59,6 +63,8 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./services/order-service/Dockerfile
+        tags: |
+          latest
 
     - name: Build and Push Docker Image - Product Service
       uses: mr-smithers-excellent/docker-build-push@v6
@@ -68,3 +74,5 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./services/product-service/Dockerfile
+        tags: |
+          latest
