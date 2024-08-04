@@ -13,7 +13,7 @@ const services = {
   order: 'http://order-service:9090',
 };
 
-app.get("/", (req, res) => {
+app.get("/", (req, res) => {    
   res.send("API Gateway is working");
 });
 
