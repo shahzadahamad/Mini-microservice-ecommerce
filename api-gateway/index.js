@@ -23,5 +23,5 @@ app.use('/product', createProxyMiddleware({ target: services.product, changeOrig
 
 
 app.listen(PORT,() => {
-  console.log(`API Gateway is running http://localhost:${PORT}`);
+  console.log(`API Gateway is running on http://localhost:${PORT}`);
 })
