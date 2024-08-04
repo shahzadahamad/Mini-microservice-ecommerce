@@ -36,35 +36,43 @@ jobs:
     - name: Build and Push Docker Image - API Gateway
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
-        image: shahzadahamadp/e-commerce-microservice-api-gateway:latest
+        image: shahzadahamadp/e-commerce-microservice-api-gateway
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./api-gateway/Dockerfile
+        tags: |
+          shahzadahamadp/e-commerce-microservice-api-gateway:latest
 
     - name: Build and Push Docker Image - Auth Service
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
-        image: shahzadahamadp/e-commerce-microservice-auth-service:latest
+        image: shahzadahamadp/e-commerce-microservice-auth-service
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./services/auth-service/Dockerfile
+        tags: |
+          shahzadahamadp/e-commerce-microservice-auth-service:latest
 
     - name: Build and Push Docker Image - Order Service
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
-        image: shahzadahamadp/e-commerce-microservice-order-service:latest
+        image: shahzadahamadp/e-commerce-microservice-order-service
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./services/order-service/Dockerfile
+        tags: |
+          shahzadahamadp/e-commerce-microservice-order-service:latest
 
     - name: Build and Push Docker Image - Product Service
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
-        image: shahzadahamadp/e-commerce-microservice-product-service:latest
+        image: shahzadahamadp/e-commerce-microservice-product-service
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./services/product-service/Dockerfile
+        tags: |
+          shahzadahamadp/e-commerce-microservice-product-service:latest
