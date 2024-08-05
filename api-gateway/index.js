@@ -14,6 +14,7 @@ const services = {
 };
 
 app.get("/", (req, res) => {    
+  console.log('api gate is working');
   res.send("API Gateway is working");
 });
 
